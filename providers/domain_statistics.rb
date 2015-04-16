@@ -48,15 +48,9 @@ action :add do
     mailto new_resource.cron_contact
   end
 
-  cookbook_file "/etc/apache2/conf.d/awstats" do
-    source "awstats"
+  apache_conf "awstats" do
+    source "awstats_apache.conf.erb"
     cookbook "awstats"
-
-    owner "root"
-    group "root"
-    mode "0755"
-
-    notifies :restart, resources(:service => "apache2")
   end
 
   cookbook_file "/usr/lib/cgi-bin/.htaccess" do
